@@ -10,6 +10,26 @@
   border-radius: 3px;
 }
 
+/* Remember changing background-img url to correct path */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("alphaPos-bg.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.row {
+  max-height: 600px;
+}
+
+.col-md-4 {
+  overflow-y: auto;
+  max-height: 580px;
+  overflow: scroll;
+}
+
 [data-alpha-pos="delete-drink"] {
   display: inline-block;
   text-align: center;
