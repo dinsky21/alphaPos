@@ -1,0 +1,26 @@
+/* Remove this block after finishing layout */
+.col-md-4,
+.col-md-8 {
+  /* outline: 1px solid steelblue; */
+  min-height: 600px;
+}
+
+.container {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+}
+
+[data-alpha-pos="delete-drink"] {
+  display: inline-block;
+  text-align: center;
+  color: #999;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+[data-alpha-pos="delete-drink"]:hover {
+  color: #333;
+}
