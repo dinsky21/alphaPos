@@ -104,3 +104,28 @@ orderLists.addEventListener("click", (event) => {
 AlphaPos.prototype.deleteDrink = function (target) {
   target.remove();
 };
+
+//結帳並顯示總金額
+AlphaPos.prototype.checkout = function () {
+  let totalAmount = 0;
+
+  document.querySelectorAll("[data-drink-price]").forEach(function (drink) {
+    totalAmount += Number(drink.textContent);
+  });
+  return totalAmount;
+};
+
+const checkoutButton = document.querySelector('[data-alpha-pos="checkout"]');
+checkoutButton.addEventListener("click", function () {
+  // 1. 計算訂單總金額
+  alert(`Total amount of drinks：$${alphaPos.checkout()}`);
+  // 2. 清空訂單
+  alphaPos.clearOrder(orderLists);
+});
+
+//清空訂單
+AlphaPos.prototype.clearOrder = function (target) {
+  target.querySelectorAll(".card").forEach(function (card) {
+    card.remove();
+  });
+};
