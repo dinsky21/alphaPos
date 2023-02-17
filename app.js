@@ -4,7 +4,6 @@ function Drink (name, sugar, ice) {
   this.sugar = sugar
   this.ice = ice
 }
-
 Drink.prototype.price = function () {
   switch (this.name) {
     case 'Black Tea':
@@ -22,15 +21,74 @@ Drink.prototype.price = function () {
       alert('No this drink')
   }
 }
+// AlphaPos Constructor Function
+function AlphaPos () {}
+const alphaPos = new AlphaPos()
 
-let blackTea = new Drink('Black Tea', 'Half Sugar', 'No Ice')
-console.log(blackTea)
-console.log(blackTea.price())
+const addDrinkButton = document.querySelector('[data-alpha-pos="add-drink"]')
+addDrinkButton.addEventListener('click', function() {
+  // 1. 取得店員選擇的飲料品項、甜度、冰塊選項內容
+  const drinkName = alphaPos.getCheckedValue('drink')
+  const ice = alphaPos.getCheckedValue('ice')
+  const sugar = alphaPos.getCheckedValue('sugar')
+  console.log(`${drinkName}, ${ice}, ${sugar}`)
 
-let lemonGreenTea = new Drink('Lemon Green Tea', 'No Sugar', 'Less Ice')
-console.log(lemonGreenTea)
-console.log(lemonGreenTea.price())
+  // 2. 如果沒有選擇飲料品項，跳出提示
+	if (!drinkName) {
+  alert('Please choose at least one item.')
+  return
+}
+  // 3. 建立飲料實例，並取得飲料價格
+	const drink = new Drink(drinkName, sugar, ice)
+  // 4. 將飲料實例產生成左側訂單區的畫面
+	alphaPos.addDrink(drink)
+})
 
-let matchaLatte = new Drink('Matcha Latte', 'Less Sugar', 'Regular Ice')
-console.log(matchaLatte)
-console.log(matchaLatte.price())
+// let allDrinksOptions = document.querySelectorAll('input[name="drink"]')
+// allDrinksOptions.forEach(function(option){
+// 	if(option.checked){console.log(`${option.value}:${option.checked}`)}
+// })
+
+// let allIceOptions = document.querySelectorAll('input[name="ice"]')
+// allIceOptions.forEach(function(option){
+// 	if (option.checked){console.log(`${option.value}:${option.checked}`)}
+// });
+
+// let allSugarOptions = document.querySelectorAll('input[name="sugar"]')
+// allSugarOptions.forEach(function(option){
+// 	if (option.checked){console.log(`${option.value}:${option.checked}`)}
+// })
+
+// 上面三個可以濃縮成下方，利用Constructor來表達，再放到上方EventListener去觸發
+
+
+AlphaPos.prototype.getCheckedValue = function (inputName) {
+	let selectedOption = ''
+	document.querySelectorAll(`[name=${inputName}]`).forEach(function(item){
+		if (item.checked) {
+			selectedOption = item.value		
+		}
+	})
+	return selectedOption
+}
+
+const orderLists = document.querySelector('[data-order-lists]')
+	AlphaPos.prototype.addDrink = function (drink) {
+  let orderListsCard = `
+    <div class="card mb-3">
+    <div class="card-body pt-3 pr-3">
+      <div class="text-right">
+        <span data-alpha-pos="delete-drink">×</span>
+      </div>
+      <h6 class="card-title mb-1">${drink.name}</h6>
+      <div class="card-text">${drink.ice}</div>
+      <div class="card-text">${drink.sugar}</div>
+    </div>
+    <div class="card-footer text-right py-2">
+      <div class="card-text text-muted">$ <span data-drink-price>${drink.price()}</span></div>
+    </div>
+  </div>
+  `
+  orderLists.insertAdjacentHTML('afterbegin', orderListsCard)
+}
+
